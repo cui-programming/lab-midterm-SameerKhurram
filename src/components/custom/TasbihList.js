@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, FlatList, Text } from 'react-native'; // You may switch Text to ui/Text later
+import { View, FlatList, Text } from '../ui'; // You may switch Text to ui/Text later -- (Done)
 import { styles } from '../../styles/styles';
 import { initialAzkaar } from '../../data/azkaar';
 
@@ -12,13 +12,31 @@ import { initialAzkaar } from '../../data/azkaar';
 export default function TasbihList() {
   const [items, setItems] = useState(initialAzkaar);
 
-  // HINT ONLY (do not complete): you will need handlers like increment(id) / decrement(id)
+  // HINT ONLY (do not complete): you will need handlers like increment(id) / decrement(id) -- (Done)
+  
+  function increment(id) {
+    const updated = items.map(item =>
+      item.id === id ? { ...item, count: item.count + 1 } : item
+    );
+    setItems(updated);
+  }
+
+  function decrement(id) {
+    const updated = items.map(item =>
+      item.id === id && item.count > 0 ? { ...item, count: item.count - 1 } : item
+    );
+    setItems(updated);
+  }
 
   const renderItem = ({ item }) => (
     <View style={styles.itemRow}>
       <Text style={styles.itemName}>{item.phrase}</Text>
       <Text style={styles.counter}>{item.count}</Text>
-      {/* TODO: Add increment/decrement buttons here using ui/Button */}
+      {/* TODO: Add increment/decrement buttons here using ui/Button */} -- (Done)
+      
+      <Button title="+" onPress={() => increment(item.id)} />
+      <Button title="-" onPress={() => decrement(item.id)} />
+    
     </View>
   );
 
